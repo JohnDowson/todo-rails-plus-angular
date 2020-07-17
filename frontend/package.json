@@ -1,9 +1,12 @@
 {
   "name": "frontend",
   "version": "0.0.0",
+  "engines": {
+    "node": "14.5"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
