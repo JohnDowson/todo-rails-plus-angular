@@ -1,0 +1,16 @@
+<mat-divider></mat-divider>
+<mat-card cdkDrag role="listitem" [ngStyle]="{'background': todo.completed ? '#eee' : '#fff'}">
+    <mat-card-content>
+        <input #editbox matInput style="display: none;" [(ngModel)]="todo.text">
+        <span #text>{{inspect ? todo.inspect() : todo.text}}</span>
+    </mat-card-content>
+    <mat-card-actions>
+        <span>
+            <mat-checkbox [checked]="todo.completed" (change)=doneToggle()>
+                Done
+            </mat-checkbox>
+            <button mat-button (click)="toggleEdit()">{{edit ? "Save" : "Edit"}}</button>
+        </span>
+    </mat-card-actions>
+</mat-card>
+<mat-divider></mat-divider>

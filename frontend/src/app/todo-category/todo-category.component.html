@@ -1,0 +1,4 @@
+<mat-list cdkDropList role="list">
+    <h1 matSubheader>{{category.title}}</h1>
+    <app-todo-item *ngFor="let todo of category.todos" [todo]="todo" (dirty)="emitDirty($event)"></app-todo-item>
+</mat-list>
