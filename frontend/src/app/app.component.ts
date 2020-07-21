@@ -39,8 +39,6 @@ export class AppComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(JSON.stringify(result, null, "\t"))
       this.backend_api.createTodo(result.todo).subscribe(
         (data) => {
           let todo = new TodoItem(data);
