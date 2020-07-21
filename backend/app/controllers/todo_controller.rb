@@ -1,10 +1,8 @@
 class TodoController < ApplicationController
   def create
-    Todo.create(
-      text: params[:text],
-      completed: params[:completed],
-      project: Project.find_by(id: params[:project_id])
-    )
+    todo = params.require(:todo).permit(:text, :completed, :project_id)
+    todo = Todo.create(todo)
+    render json: todo.json()
     end
 
   def update
