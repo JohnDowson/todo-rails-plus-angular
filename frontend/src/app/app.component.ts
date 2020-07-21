@@ -22,31 +22,47 @@ export class AppComponent implements OnInit {
       error => console.error(error)
     );
   }
-  handleDirty(todo: TodoItem) {
-    this.backend_api.updateTodo(todo).subscribe(
-      (data) => { },
-      error => console.error(error)
-    );
-  }
-  openDialog(): void {
+  openDialog(edit: boolean, todo_edit: TodoItem): void {
+
+    let data = {
+      todo: {},
+      categories: this.categories.map((cat) => {
+        return { title: cat.title, id: cat.id }
+      }),
+      edit: edit
+    }
+    if (edit) {
+      data.todo = todo_edit
+    } else {
+      data.todo = new TodoItem()
+    }
+
     const dialogRef = this.dialog.open(NewTodoComponent, {
-      data: {
-        todo: new TodoItem,
-        categories: this.categories.map((cat) => {
-          return { title: cat.title, id: cat.id }
-        })
-      }
+      data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.backend_api.createTodo(result.todo).subscribe(
-        (data) => {
-          let todo = new TodoItem(data);
-          this.categories.find((cat) => cat.id === todo.project_id).todos.push(todo)
-        },
-        error => console.error(error)
-      );
+      if (result.edit) {
+        this.updateTodo(result.todo)
+      } else {
+        this.addTodo(result)
+      }
     });
+  }
+  updateTodo(todo: TodoItem) {
+    this.backend_api.updateTodo(todo).subscribe(
+      (data) => { this.ngOnInit() },
+      error => console.error(error)
+    );
+  }
+  addTodo(result) {
+    this.backend_api.createTodo(result.todo).subscribe(
+      (data) => {
+        let todo = new TodoItem(data);
+        this.categories.find((cat) => cat.id === todo.project_id).todos.push(todo)
+      },
+      error => console.error(error)
+    );
   }
   constructCategories(data) {
     var ret = [];

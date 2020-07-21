@@ -1,6 +1,6 @@
 <p>
   <mat-toolbar>
-    <button mat-icon-button (click)=openDialog()>
+    <button mat-icon-button (click)="openDialog(false, {})">
       <mat-icon>add</mat-icon>
     </button>
     <span>{{title}}</span>
@@ -8,6 +8,7 @@
 </p>
 <div class="row">
   <div *ngFor="let category of categories" class="column">
-    <app-todo-category [category]="category" (dirty)="handleDirty($event)"></app-todo-category>
+    <app-todo-category [category]="category" (done)="updateTodo($event)" (edit)="openDialog(true, $event)">
+    </app-todo-category>
   </div>
 </div>

@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TodoItem } from "../todo-item";
 import { environment } from "../../environments/environment";
-import { NONE_TYPE } from '@angular/compiler';
 
 
 @Component({
@@ -13,43 +12,21 @@ export class TodoItemComponent implements OnInit {
   @Input()
   todo: TodoItem;
   @Output()
-  dirty: EventEmitter<TodoItem> = new EventEmitter();
-
-  edit: boolean = false;
+  done: EventEmitter<TodoItem> = new EventEmitter();
+  @Output()
+  edit: EventEmitter<TodoItem> = new EventEmitter();
   inspect = !environment.production;
-
-
-
-  @ViewChild("editbox") editBox: ElementRef;
-  @ViewChild("text") textContents: ElementRef;
-
-  toggleEdit() {
-    this.checkDirty()
-    this.edit = !this.edit;
-    if (this.edit) {
-      this.editBox.nativeElement.style = "display: inherit;"
-      this.textContents.nativeElement.style = "display: none;"
-      this.editBox.nativeElement.focus();
-    } else {
-      this.editBox.nativeElement.style = "display: none;"
-      this.textContents.nativeElement.style = "display: inherit;"
-    }
-  }
-
   constructor() { }
 
   doneToggle() {
     this.todo.completed = !this.todo.completed;
-    this.dirty.emit(this.todo) // i don't have time to figure out a robust dirty check
+    this.done.emit(this.todo)
   }
 
   ngOnInit(): void {
   }
 
-  checkDirty() {
-    if (this.edit) {
-      this.dirty.emit(this.todo)
-    }
+  emitEdit() {
+    this.edit.emit(this.todo)
   }
-
 }

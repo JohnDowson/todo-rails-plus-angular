@@ -11,10 +11,15 @@ export class TodoCategoryComponent implements OnInit {
   @Input()
   category: TodoCategory;
   @Output()
-  dirty: EventEmitter<TodoItem> = new EventEmitter<TodoItem>();
+  edit: EventEmitter<TodoItem> = new EventEmitter<TodoItem>();
+  @Output()
+  done: EventEmitter<TodoItem> = new EventEmitter<TodoItem>();
   constructor() { }
-  emitDirty(todo: TodoItem) {
-    this.dirty.emit(todo)
+  emitEdit(todo: TodoItem) {
+    this.edit.emit(todo)
+  }
+  emitDone(todo: TodoItem) {
+    this.done.emit(todo)
   }
   ngOnInit(): void {
   }

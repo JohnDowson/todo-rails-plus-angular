@@ -5,6 +5,7 @@ import { TodoItem } from '../todo-item';
 export interface NewTodoData {
   todo: TodoItem;
   categories: Object;
+  edit: boolean;
 }
 
 @Component({
