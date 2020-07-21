@@ -37,7 +37,6 @@ export class BackendApiService {
     );
   }
   createTodo(todo: TodoItem) {
-    console.log(JSON.stringify(todo));
     return this.http.post<TodoItem>(this.api_url + 'todos', JSON.stringify(todo), jsonHeader).pipe(
       retry(3),
       catchError((error: HttpErrorResponse) => {

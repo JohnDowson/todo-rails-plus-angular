@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { TodoItem } from "../todo-item";
 import { environment } from "../../environments/environment";
+import { NONE_TYPE } from '@angular/compiler';
 
 
 @Component({
@@ -47,7 +48,6 @@ export class TodoItemComponent implements OnInit {
 
   checkDirty() {
     if (this.edit) {
-      alert("Emitting dirty")
       this.dirty.emit(this.todo)
     }
   }
