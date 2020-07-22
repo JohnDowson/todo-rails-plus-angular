@@ -19,14 +19,18 @@ export class TodoCategoryComponent implements OnInit {
   @Output()
   todoDelete: EventEmitter<TodoItem> = new EventEmitter<TodoItem>();
   constructor() { }
+
+  ngOnInit(): void {
+  }
+  trackTodos(_index, item) {
+    return item.id
+  }
+  emitCategoryDelete() { this.categoryDelete.emit(this.category.id) }
+  emitTodoDelete(todo: TodoItem) { this.todoDelete.emit(todo) }
   emitEdit(todo: TodoItem) {
     this.edit.emit(todo)
   }
   emitDone(todo: TodoItem) {
     this.done.emit(todo)
   }
-  ngOnInit(): void {
-  }
-  emitCategoryDelete() { this.categoryDelete.emit(this.category.id) }
-  emitTodoDelete(todo: TodoItem) { this.todoDelete.emit(todo) }
 }

@@ -5,6 +5,7 @@ import { BackendApiService } from './backend-api/backend-api.service'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { TodoEditorDialog } from './todo-edit-dialog/todo-edit-dialog.component';
 import { CategoryEditDialog } from './category-edit-dialog/category-edit-dialog.component';
+import { i18nMetaToDocStmt } from '@angular/compiler/src/render3/view/i18n/meta';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,6 +23,9 @@ export class AppComponent implements OnInit {
       (data) => { this.categories = this.constructCategories(data); },
       error => console.error(error)
     );
+  }
+  trackCategories(_index, item) {
+    return item.id
   }
   openEditCategoryDialog(category: TodoCategory) {
     this.openCategoryDialog(true, category)
@@ -65,7 +69,7 @@ export class AppComponent implements OnInit {
   }
   deleteCategory(category_id: number) {
     this.backend_api.deleteCategory(category_id).subscribe(
-      () => { this.ngOnInit() },
+      () => { this.ngOnInit() /* this.categories.filter((cat) => cat.id !== category_id) */ },
       error => console.error(error)
     );
   }
@@ -113,7 +117,23 @@ export class AppComponent implements OnInit {
   }
   updateTodo(todo: TodoItem) {
     this.backend_api.updateTodo(todo).subscribe(
-      () => { this.ngOnInit() },
+      () => {
+        this.ngOnInit()
+        /* let category = this.categories.find((cat) => cat.id === todo.project_id)
+        let index = category.todos.findIndex((td) => td.id === todo.id)
+        if (index !== -1) {
+          category.todos[index] = todo
+        } else {
+          // todo's category has changed, need to remove it from the old category
+          let old_cat = this.categories.find((cat) => {
+            return cat.todos.find((td) => {
+              return td.id === todo.id
+            })
+          })
+          old_cat.todos.filter((td) => td.id !== todo.id)
+          category.todos.push(todo) 
+      }*/
+      },
       error => console.error(error)
     );
   }

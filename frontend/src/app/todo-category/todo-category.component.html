@@ -3,6 +3,6 @@
         <button mat-icon-button (click)="emitCategoryDelete()">
             <mat-icon>delete</mat-icon>
         </button></h1>
-    <app-todo-item *ngFor="let todo of category.todos" [todo]="todo" (todoDelete)="emitTodoDelete($event)"
-        (done)="emitDone($event)" (edit)="emitEdit($event)"></app-todo-item>
+    <app-todo-item *ngFor="let todo of category.todos; trackBy: trackTodos" [todo]="todo"
+        (todoDelete)="emitTodoDelete($event)" (done)="emitDone($event)" (edit)="emitEdit($event)"></app-todo-item>
 </mat-list>

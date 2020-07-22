@@ -11,7 +11,7 @@
   </mat-toolbar>
 </p>
 <div class="row">
-  <div *ngFor="let category of categories" class="column">
+  <div *ngFor="let category of categories;trackBy: trackCategories" class="column">
     <app-todo-category [category]="category" (todoDelete)="deleteTodo($event)" (categoryDelete)="deleteCategory($event)"
       (done)="updateTodo($event)" (edit)="openEditTodoDialog($event)">
     </app-todo-category>
