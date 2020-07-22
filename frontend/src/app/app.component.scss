@@ -1,6 +1,10 @@
 .row {
     display: flex;
-}
-.column {
-    flex: auto;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    height: 100%;
+
+    .column {
+        flex: 0 0 auto;
+    }
 }

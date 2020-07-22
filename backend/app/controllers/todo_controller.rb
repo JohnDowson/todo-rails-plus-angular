@@ -10,4 +10,9 @@ class TodoController < ApplicationController
     todo = params.require(:todo).permit(:text, :completed, :project_id)
     Todo.find_by(id: id).update!(todo)
   end
+
+  def delete
+    id = params.require(:id)
+    Todo.find_by(id: id).delete
+  end
 end

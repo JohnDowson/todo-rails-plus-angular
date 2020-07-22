@@ -5,6 +5,7 @@ import { Observable, throwError } from "rxjs";
 import { catchError, retry } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { TodoItem } from "../todo-item/todo-item.model";
+import { TodoCategory } from '../todo-category/todo-category.model';
 
 const jsonHeader = {
   headers: new HttpHeaders({
@@ -38,6 +39,33 @@ export class BackendApiService {
   }
   createTodo(todo: TodoItem) {
     return this.http.post<TodoItem>(this.api_url + 'todos', JSON.stringify(todo), jsonHeader).pipe(
+      retry(3),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(
+          JSON.stringify(error));
+      })
+    );
+  }
+  deleteTodo(todo: TodoItem) {
+    return this.http.delete(this.api_url + 'todos/' + todo.id).pipe(
+      retry(3),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(
+          JSON.stringify(error));
+      })
+    );
+  }
+  createCategory(category: TodoCategory) {
+    return this.http.post<TodoCategory>(this.api_url + 'projects', JSON.stringify({ title: category.title }), jsonHeader).pipe(
+      retry(3),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(
+          JSON.stringify(error));
+      })
+    );
+  }
+  deleteCategory(category_id: number) {
+    return this.http.delete(this.api_url + 'projects/' + category_id).pipe(
       retry(3),
       catchError((error: HttpErrorResponse) => {
         return throwError(

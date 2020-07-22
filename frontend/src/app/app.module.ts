@@ -15,17 +15,21 @@ import { BackendApiService } from './backend-api/backend-api.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import { TodoEditorDialog } from './new-todo/new-todo.component';
+import { TodoEditorDialog } from './todo-edit-dialog/todo-edit-dialog.component';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from "@angular/material/input";
+import { MatMenuModule } from '@angular/material/menu';
+import { CategoryEditDialog } from './category-edit-dialog/category-edit-dialog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     TodoItemComponent,
     TodoCategoryComponent,
-    TodoEditorDialog
+    TodoEditorDialog,
+    CategoryEditDialog
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,7 @@ import { MatInputModule } from "@angular/material/input";
     FormsModule,
     MatSelectModule,
     MatInputModule,
+    MatMenuModule,
   ],
   providers: [BackendApiService],
   bootstrap: [AppComponent]

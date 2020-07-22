@@ -9,9 +9,9 @@ export interface NewTodoData {
 }
 
 @Component({
-  selector: 'app-new-todo',
-  templateUrl: './new-todo.component.html',
-  // styleUrls: ['./new-todo.component.scss']
+  selector: 'app-todo-edit-dialog',
+  templateUrl: './todo-edit-dialog.component.html',
+  styleUrls: ['./todo-edit-dialog.component.scss']
 })
 export class TodoEditorDialog implements OnInit {
 

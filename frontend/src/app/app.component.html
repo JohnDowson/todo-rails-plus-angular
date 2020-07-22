@@ -1,14 +1,19 @@
 <p>
   <mat-toolbar>
-    <button mat-icon-button (click)="openDialog(false, {})">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>add</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openNewTodoDialog()">Add todo</button>
+      <button mat-menu-item (click)="openNewCategoryDialog()">Add category</button>
+    </mat-menu>
     <span>{{title}}</span>
   </mat-toolbar>
 </p>
 <div class="row">
   <div *ngFor="let category of categories" class="column">
-    <app-todo-category [category]="category" (done)="updateTodo($event)" (edit)="openDialog(true, $event)">
+    <app-todo-category [category]="category" (todoDelete)="deleteTodo($event)" (categoryDelete)="deleteCategory($event)"
+      (done)="updateTodo($event)" (edit)="openEditTodoDialog($event)">
     </app-todo-category>
   </div>
 </div>

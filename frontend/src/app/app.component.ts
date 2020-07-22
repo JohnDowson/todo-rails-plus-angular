@@ -3,7 +3,8 @@ import { TodoItem } from './todo-item/todo-item.model';
 import { TodoCategory } from "./todo-category/todo-category.model";
 import { BackendApiService } from './backend-api/backend-api.service'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { TodoEditorDialog } from './new-todo/new-todo.component';
+import { TodoEditorDialog } from './todo-edit-dialog/todo-edit-dialog.component';
+import { CategoryEditDialog } from './category-edit-dialog/category-edit-dialog.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,8 +23,59 @@ export class AppComponent implements OnInit {
       error => console.error(error)
     );
   }
-  openDialog(edit: boolean, todo_edit: TodoItem): void {
+  openEditCategoryDialog(category: TodoCategory) {
+    this.openCategoryDialog(true, category)
+  }
+  openNewCategoryDialog() {
+    this.openCategoryDialog(false, new TodoCategory())
+  }
+  openCategoryDialog(edit: boolean, category: TodoCategory): void {
+    let data = {
+      category: { title: "" },
+      edit: edit
+    }
+    if (edit) {
+      data.category = category
+    }
 
+    const dialogRef = this.dialog.open(CategoryEditDialog, {
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) { return }
+      if (result.edit) {
+        this.updateCategory(result)
+      } else {
+        this.addCategory(result)
+      }
+    });
+  }
+  addCategory(result) {
+    this.backend_api.createCategory(result.category).subscribe(
+      (data) => {
+        let category = new TodoCategory(data);
+        this.categories.push(category)
+      },
+      error => console.error(error)
+    );
+  }
+  updateCategory(_) {
+    // noop
+  }
+  deleteCategory(category_id: number) {
+    this.backend_api.deleteCategory(category_id).subscribe(
+      () => { this.ngOnInit() },
+      error => console.error(error)
+    );
+  }
+  openEditTodoDialog(todo: TodoItem) {
+    this.openTodoDialog(true, todo)
+  }
+  openNewTodoDialog() {
+    this.openTodoDialog(false, new TodoItem({}))
+  }
+  openTodoDialog(edit: boolean, todo_edit: TodoItem): void {
     let data = {
       todo: {},
       categories: this.categories.map((cat) => {
@@ -42,6 +94,7 @@ export class AppComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (!result) { return }
       if (result.edit) {
         this.updateTodo(result.todo)
       } else {
@@ -49,9 +102,18 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  deleteTodo(todo: TodoItem) {
+    this.backend_api.deleteTodo(todo).subscribe(
+      () => {
+        let category = this.categories.find((cat) => cat.id === todo.project_id)
+        category.todos = category.todos.filter((t) => t.id !== todo.id)
+      },
+      error => console.error(error)
+    );
+  }
   updateTodo(todo: TodoItem) {
     this.backend_api.updateTodo(todo).subscribe(
-      (data) => { this.ngOnInit() },
+      () => { this.ngOnInit() },
       error => console.error(error)
     );
   }
