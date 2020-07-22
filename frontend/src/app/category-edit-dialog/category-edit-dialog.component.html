@@ -1,13 +1,15 @@
 <h1 mat-dialog-title>{{ data.edit ? "Edit Category" : "New Category"}}</h1>
 <div mat-dialog-content>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Category Title</mat-label>
-        <input matInput value={{data.category.title}} [(ngModel)]="data.category.title">
-    </mat-form-field>
-
+    <form [formGroup]="formControl">
+        <mat-form-field appearance="fill">
+            <mat-label>Category Title</mat-label>
+            <input matInput value={{data.category.title}} formControlName="title">
+        </mat-form-field>
+    </form>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+    <form [formGroup]="formControl">
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button mat-button type="submit" (click)="onSubmit()" cdkFocusInitial>Ok</button>
+    </form>
 </div>

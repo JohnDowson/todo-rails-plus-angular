@@ -1,22 +1,24 @@
 <h1 mat-dialog-title>{{ data.edit ? "Edit Todo" : "New Todo"}}</h1>
 <div mat-dialog-content>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Todo Text</mat-label>
-        <input matInput value={{data.todo.text}} [(ngModel)]="data.todo.text">
-    </mat-form-field>
-    <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Todo Category</mat-label>
-        <mat-select matInput [value]="data.todo.project_id" [(ngModel)]="data.todo.project_id">
-            <mat-option matInput *ngFor="let cat of data.categories" [value]="cat.id">
-                {{cat.title}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
+    <form [formGroup]="formControl">
+        <mat-form-field appearance="fill">
+            <mat-label>Todo Text</mat-label>
+            <input matInput id="text" formControlName="text" value={{data.todo.text}}>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Todo Category</mat-label>
+            <mat-select matInput id="project_id" formControlName="project_id" [value]="data.todo.project_id">
+                <mat-option matInput *ngFor="let cat of data.categories" [value]="cat.id">
+                    {{cat.title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+    <form [formGroup]="formControl">
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button mat-button type="submit" (click)="onSubmit()" cdkFocusInitial>Ok</button>
+    </form>
 </div>

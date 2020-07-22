@@ -8,3 +8,9 @@
         flex: 0 0 auto;
     }
 }
+mat-select.ng-touched.ng-invalid{
+    border-color: red;
+   }
+input.ng-touched.ng-invalid{
+    border-color: red;
+   }

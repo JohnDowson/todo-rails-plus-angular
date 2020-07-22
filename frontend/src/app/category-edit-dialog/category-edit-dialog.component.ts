@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TodoCategory } from '../todo-category/todo-category.model';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { formInvalid, formTouchAll } from "../utils/form-utils";
 
 export interface NewCategoryData {
   category: TodoCategory;
@@ -14,13 +16,36 @@ export interface NewCategoryData {
 })
 export class CategoryEditDialog implements OnInit {
 
+  formControl: FormGroup;
+
   constructor(
+    @Inject(FormBuilder) public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<CategoryEditDialog>,
     @Inject(MAT_DIALOG_DATA) public data: NewCategoryData) { }
 
+  ngOnInit(): void {
+    this.initForm()
+  }
+
+  initForm() {
+    this.formControl = this.formBuilder.group({
+      title: [
+        this.data.category.title,
+        [Validators.required]
+      ],
+    })
+  }
+
+  onSubmit() {
+    if (formInvalid(this.formControl)) {
+      formTouchAll(this.formControl)
+      return
+    }
+    this.data.category.title = this.formControl.value.title
+    this.dialogRef.close(this.data)
+  }
+
   onCancel() {
     this.dialogRef.close();
-  }
-  ngOnInit(): void {
   }
 }

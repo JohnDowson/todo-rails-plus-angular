@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TodoItem } from './todo-item/todo-item.model';
 import { TodoCategory } from "./todo-category/todo-category.model";
 import { BackendApiService } from './backend-api/backend-api.service'
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { TodoEditorDialog } from './todo-edit-dialog/todo-edit-dialog.component';
 import { CategoryEditDialog } from './category-edit-dialog/category-edit-dialog.component';
-import { i18nMetaToDocStmt } from '@angular/compiler/src/render3/view/i18n/meta';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
