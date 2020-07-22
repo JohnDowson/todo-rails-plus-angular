@@ -11,11 +11,11 @@ import { MatButtonModule } from "@angular/material/button";
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { TodoCategoryComponent } from './todo-category/todo-category.component';
 import { HttpClientModule } from '@angular/common/http';
-import { BackendApiService } from './backend-api.service';
+import { BackendApiService } from './backend-api/backend-api.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NewTodoComponent } from './new-todo/new-todo.component';
+import { TodoEditorDialog } from './new-todo/new-todo.component';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,7 +25,7 @@ import { MatInputModule } from "@angular/material/input";
     AppComponent,
     TodoItemComponent,
     TodoCategoryComponent,
-    NewTodoComponent
+    TodoEditorDialog
   ],
   imports: [
     BrowserModule,

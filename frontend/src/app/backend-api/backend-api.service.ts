@@ -3,8 +3,8 @@ import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/htt
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from "rxjs";
 import { catchError, retry } from "rxjs/operators";
-import { environment } from "../environments/environment";
-import { TodoItem } from "./todo-item";
+import { environment } from "../../environments/environment";
+import { TodoItem } from "../todo-item/todo-item.model";
 
 const jsonHeader = {
   headers: new HttpHeaders({

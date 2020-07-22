@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TodoItem } from '../todo-item';
+import { TodoItem } from '../todo-item/todo-item.model';
 
 export interface NewTodoData {
   todo: TodoItem;
@@ -13,10 +13,10 @@ export interface NewTodoData {
   templateUrl: './new-todo.component.html',
   // styleUrls: ['./new-todo.component.scss']
 })
-export class NewTodoComponent implements OnInit {
+export class TodoEditorDialog implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<NewTodoComponent>,
+    public dialogRef: MatDialogRef<TodoEditorDialog>,
     @Inject(MAT_DIALOG_DATA) public data: NewTodoData) { }
 
   onCancel() {

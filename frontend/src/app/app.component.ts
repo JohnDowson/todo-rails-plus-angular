@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TodoItem } from './todo-item';
-import { TodoCategory } from "./todo-category";
-import { BackendApiService } from './backend-api.service'
+import { TodoItem } from './todo-item/todo-item.model';
+import { TodoCategory } from "./todo-category/todo-category.model";
+import { BackendApiService } from './backend-api/backend-api.service'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { NewTodoComponent } from './new-todo/new-todo.component';
+import { TodoEditorDialog } from './new-todo/new-todo.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       data.todo = new TodoItem()
     }
 
-    const dialogRef = this.dialog.open(NewTodoComponent, {
+    const dialogRef = this.dialog.open(TodoEditorDialog, {
       data: data
     });
 
